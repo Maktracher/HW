@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// str
+// struct
 
 typedef struct {
 	int* arr;
