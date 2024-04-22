@@ -68,6 +68,55 @@ void print(Mnoz mn) {
 	printf("\n");
 }
 
+void sum(Mnoz sm1, Mnoz sm2) {
+
+	int sum;
+
+	for (size_t i = 0; i < sm1.size; i++)
+	{
+		for (size_t j = 0; j < sm2.size; j++) {
+
+			sum = sm2.arr[j] + sm1.arr[i];
+
+			
+
+
+		}
+		printf("%d ", sum);
+
+	}
+	
+
+}
+
+
+void suma(Mnoz sm1, Mnoz sm2) {
+	
+int sum1 = 0;
+int sum2 = 0;
+int sum = 0;
+
+	for (size_t i = 0; i < sm1.size; i++)
+	{
+		
+		sum1 += sm1.arr[i];
+		
+	}
+	for (size_t j = 0; j < sm2.size; j++){
+			
+			sum2 += sm2.arr[j];
+			
+			
+			
+
+		}
+
+	sum = sum1 + sum2;
+	
+	printf("%d \n", sum);
+	
+
+}
 
 int main(){
 	srand(time(0));
@@ -86,4 +135,7 @@ int main(){
 	print(m2);
 	Mnoz n1 = per(m1, m2);
 	print(n1);
+
+	suma(m1, m2);
+	sum(m1, m2);
 }
