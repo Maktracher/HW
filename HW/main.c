@@ -69,24 +69,18 @@ void print(Mnoz mn) {
 }
 
 void sum(Mnoz sm1, Mnoz sm2) {
-
-	int sum;
-
-	for (size_t i = 0; i < sm1.size; i++)
-	{
-		for (size_t j = 0; j < sm2.size; j++) {
-
-			sum = sm2.arr[j] + sm1.arr[i];
-
-			
-
-
-		}
-		printf("%d ", sum);
-
+	if (sm1.size == sm2.size) {
+		int sum=0;
+			for (size_t j = 0; j < sm2.size; j++) {
+				sum = sm2.arr[j] + sm1.arr[j];
+				printf("%d ", sum);
+			}
 	}
-	
-
+	else
+	{
+		printf("ne");
+		return;
+	}
 }
 
 
