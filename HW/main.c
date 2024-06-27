@@ -1,231 +1,124 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-int k = 0;
-int l = 0;
-// struct
+#include <stdbool.h>
 
 typedef struct {
-	int* arr;
-	int size;
+    int* arr;
+    int size;
+    int capacity;
+} Mnoz;
 
-}Mnoz;
+void initMnoz(Mnoz* mnoz, int capacity) {
+    mnoz->size = 0;
+    mnoz->capacity = capacity;
+    mnoz->arr = (int*)malloc(capacity * sizeof(int));
+}
 
-void constract(Mnoz* mnoz, int size) {
-
-	mnoz->size = size;
-	mnoz->arr = (int*)malloc(mnoz->size * sizeof(int));
-
+void freeMnoz(Mnoz* mnoz) {
+    free(mnoz->arr);
+    mnoz->arr = NULL;
+    mnoz->size = 0;
+    mnoz->capacity = 0;
 }
 
 void add(Mnoz* mnoz, int num) {
-	Mnoz mn;
-	constract(&mn, mnoz->size + 1);
-	for (size_t i = 0; i < mnoz->size; i++)
-	{
-		mn.arr[i] = mnoz->arr[i];
-
-	}
-	mn.arr[mn.size - 1] = num;
-	free(mnoz->arr);
-	mnoz->arr = mn.arr;
-	mnoz->size = mn.size;
+    if (mnoz->size >= mnoz->capacity) {
+        mnoz->capacity = mnoz->capacity == 0 ? 1 : mnoz->capacity * 2;
+        mnoz->arr = (int*)realloc(mnoz->arr, mnoz->capacity * sizeof(int));
+    }
+    mnoz->arr[mnoz->size++] = num;
 }
 
-
-Mnoz per(Mnoz mn1, Mnoz mn2) {
-	Mnoz result;
-	constract(&result,0);
-	for (size_t i = 0; i < mn1.size; i++)
-	{
-		l++;
-		for (size_t j = 0; j < mn2.size; j++)
-		{
-			l++;
-			if (mn1.arr[i] == mn2.arr[j]) {
-				int find = 0;
-				l ++;
-
-				for (size_t l = 0; l < result.size; l++)
-				{
-					if (mn1.arr[i] == result.arr[l]) {
-						l++;
-						find = 1;
-					}
-				}
-				if (!find)
-				{
-					l++;
-					add(&result, mn1.arr[i]);
-				}
-			}
-		}
-	}
-
-	return result;
-
+bool contains(int* arr, int size, int num) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == num) return true;
+    }
+    return false;
 }
 
-Mnoz ob(Mnoz mn1, Mnoz mn2) {
-	Mnoz result;
-	constract(&result, 0);
-	for (size_t i = 0; i < mn1.size; i++)
-	{
-		k++;
-		int find = 0;
-		for (size_t l = 0; l < result.size; l++)
-		{
-			k++;
-			if (mn1.arr[i] == result.arr[l]) {
-				k++;
-				find = 1;
-				break;
-			}
-		}
-		if (!find) {
-			k++;
-			add(&result, mn1.arr[i]);
-		}
-	}
-	for (size_t j = 0; j < mn2.size; j++)
-	{
-		k++;
-		int find = 0;
-		for (size_t l = 0; l < result.size; l++)
-		{
-			if (mn2.arr[j] == result.arr[l]) {
-				k++;
-				find = 1;
-				break;
-			}
-		}
-		if (!find) {
-			k++;
-			add(&result, mn2.arr[j]);
-		}
-	}
-	return result;
+Mnoz intersection(Mnoz mn1, Mnoz mn2) {
+    Mnoz result;
+    initMnoz(&result, mn1.size < mn2.size ? mn1.size : mn2.size);
+    for (int i = 0; i < mn1.size; i++) {
+        if (contains(mn2.arr, mn2.size, mn1.arr[i]) && !contains(result.arr, result.size, mn1.arr[i])) {
+            add(&result, mn1.arr[i]);
+        }
+    }
+    return result;
 }
 
-
-
- 
-void print(Mnoz mn) {
-
-	for (size_t i = 0; i < mn.size; i++)
-	{
-		k++;
-		printf("%d ", mn.arr[i]);
-
-	}
-	printf("\n");
+Mnoz unionMnoz(Mnoz mn1, Mnoz mn2) {
+    Mnoz result;
+    initMnoz(&result, mn1.size + mn2.size);
+    for (int i = 0; i < mn1.size; i++) {
+        if (!contains(result.arr, result.size, mn1.arr[i])) {
+            add(&result, mn1.arr[i]);
+        }
+    }
+    for (int i = 0; i < mn2.size; i++) {
+        if (!contains(result.arr, result.size, mn2.arr[i])) {
+            add(&result, mn2.arr[i]);
+        }
+    }
+    return result;
 }
 
-void sum(Mnoz sm1, Mnoz sm2) {
-	if (sm1.size == sm2.size) {
-		
-		int sum=0;
-			for (size_t j = 0; j < sm2.size; j++) {
-				sum = sm2.arr[j] + sm1.arr[j];
-				printf("%d ", sum);
-				
-			}
-	}
-	else
-	{
-		printf("ne");
-		return;
-	}
+void printMnoz(Mnoz mn) {
+    for (int i = 0; i < mn.size; i++) {
+        printf("%d ", mn.arr[i]);
+    }
+    printf("\n");
 }
-
 
 void suma(Mnoz sm1, Mnoz sm2) {
-	
-int sum1 = 0;
-int sum2 = 0;
-int sum = 0;
-
-	for (size_t i = 0; i < sm1.size; i++)
-	{
-		
-		sum1 += sm1.arr[i];
-		
-	}
-	for (size_t j = 0; j < sm2.size; j++){
-			
-			sum2 += sm2.arr[j];
-			
-			
-			k++;
-
-		}
-
-	sum = sum1 + sum2;
-	
-	printf("%d \n", sum);
-	
-
+    int sum1 = 0, sum2 = 0;
+    for (int i = 0; i < sm1.size; i++) {
+        sum1 += sm1.arr[i];
+    }
+    for (int i = 0; i < sm2.size; i++) {
+        sum2 += sm2.arr[i];
+    }
+    printf("Sum of both sets: %d\n", sum1 + sum2);
 }
 
-
-
-void pocetToFile(int times) {
-	Mnoz M1, M2, M3;
-	FILE* fptr;
-	errno_t err;
-
-	err = fopen_s(&fptr, "pocty2.txt", "w");
-	if (err != 0) {
-		printf("Помилка відкриття файлу\n");
-		return;
-	}
-
-	for (int i = 0; i < times; i++) {
-		constract(&M1, i);
-		constract(&M2, i);
-		M3 = per(M1, M2);
-		M3 = ob(M1, M2);
-		printf("\n %d", k);
-		fprintf(fptr, "%d\n", l);
-		k = 0;
-	}
-	fclose(fptr);
-	free(M1.arr);
-	free(M2.arr);
+void sumElements(Mnoz sm1, Mnoz sm2) {
+    if (sm1.size == sm2.size) {
+        for (int i = 0; i < sm1.size; i++) {
+            printf("%d ", sm1.arr[i] + sm2.arr[i]);
+        }
+        printf("\n");
+    }
+    else {
+        printf("Sets are of different sizes\n");
+    }
 }
 
+int main() {
+    Mnoz m1, m2;
+    initMnoz(&m1, 10);
+    initMnoz(&m2, 10);
 
-int main(){
-	srand(time(0));
-	Mnoz m1, m2;
-	constract(&m1, 0);
-	constract(&m2, 0);
-	for (size_t i = 0; i < 10; i++)
-	{
-		add(&m1,rand() % 100);
-	}
-	for (size_t i = 0; i < 10; i++)
-	{
-		add(&m2, rand() % 100);
-	}
-	print(m1);
-	print(m2);
-	Mnoz n1 = per(m1, m2);
-	
-	print(n1);
-	
+    for (int i = 0; i < 10; i++) {
+        add(&m1, rand() % 100);
+        add(&m2, rand() % 100);
+    }
 
-	Mnoz n2 = ob(m1, m2);
-	printf("\n");
-	print(n2);
-	printf("\n");
-	suma(m1, m2);
-	sum(m1, m2);
-	printf("\n");
-	printf("\n %d", k);
+    printMnoz(m1);
+    printMnoz(m2);
 
-	pocetToFile(50);
-	printf("\n");
-	return 0;
+    Mnoz inter = intersection(m1, m2);
+    printMnoz(inter);
 
+    Mnoz uni = unionMnoz(m1, m2);
+    printMnoz(uni);
+
+    suma(m1, m2);
+    sumElements(m1, m2);
+
+    freeMnoz(&m1);
+    freeMnoz(&m2);
+    freeMnoz(&inter);
+    freeMnoz(&uni);
+
+    return 0;
 }
