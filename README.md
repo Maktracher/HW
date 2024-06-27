@@ -1,56 +1,83 @@
 
-# Set Operations
+---
 
-This program performs basic set operations such as union, intersection, and sum of sets.
+# Set Operations in C
 
-## Introduction
+This project demonstrates efficient implementations of basic set operations in C. It includes optimized functions for intersection, union, and other set-related functionalities using dynamic memory management.
 
-This C program allows you to work with sets represented as arrays. It includes functions to perform operations like union and intersection of sets, as well as calculating the sum of corresponding elements in two sets.
+## Features
 
-## How to Use
+- **Dynamic Arrays:** Efficient resizing and memory management.
+- **Set Operations:** Functions to compute the intersection and union of two sets in linear time.
+- **Sum Operations:** Functions to compute element-wise and total sum of sets.
+- **Random Set Generation:** Populate sets with random integers for testing.
 
-1. Clone this repository to your local machine:
+## Getting Started
 
-```bash
-git clone https://github.com/your-username/set-operations.git
-```
+### Prerequisites
 
-2. Navigate to the repository directory:
-
-```bash
-cd set-operations
-```
-
-3. Compile the program:
+Ensure you have a C compiler installed. For example, GCC:
 
 ```bash
-gcc -o set_operations set_operations.c
+sudo apt-get install gcc
 ```
 
-4. Run the program:
+### Compilation
+
+Clone the repository and compile the source code:
+
+```bash
+git clone https://github.com/yourusername/set-operations-in-c.git
+cd set-operations-in-c
+gcc -o set_operations main.c
+```
+
+### Running the Program
+
+Execute the compiled binary:
 
 ```bash
 ./set_operations
 ```
 
-5. Follow the prompts to enter set elements and choose the operation you want to perform.
+This will run the main program that:
+- Generates two random sets of integers.
+- Computes their intersection and union.
+- Displays the results.
 
-## Example
+### Example Output
 
-Here's an example of how to use the program:
+```
+Set 1: 12 45 78 23 56 89 12 34 56 78 
+Set 2: 34 67 23 89 12 56 90 34 78 45 
 
-```plaintext
-Enter elements of set 1:
-10 20 30 40 50
-Enter elements of set 2:
-30 40 50 60 70
-Set 1: 10 20 30 40 50
-Set 2: 30 40 50 60 70
-Intersection of sets: 30 40 50
-Sum of corresponding elements: 40 60 80 100 120
+Intersection: 12 45 78 23 56 89 34 
+Union: 12 45 78 23 56 89 34 67 90 
+Sum of both sets: 770
+Sum of elements-wise: 46 112 101 112 112 178 102 68 134 123
 ```
 
-## Contributing
+## Source Code
 
-If you find any issues or have suggestions for improvement, feel free to open an issue or create a pull request.
+### `main.c`
+
+The main file where the set operations are implemented and tested.
+
+### Functions
+
+- **Dynamic Array Management:**
+  - `initMnoz`: Initialize a dynamic array.
+  - `freeMnoz`: Free the dynamic array memory.
+  - `add`: Add an element to the dynamic array.
+
+- **Set Operations:**
+  - `intersection`: Compute the intersection of two sets.
+  - `unionMnoz`: Compute the union of two sets.
+
+- **Sum Operations:**
+  - `suma`: Compute the total sum of all elements in both sets.
+  - `sumElements`: Compute the element-wise sum of two sets.
+
+
+
 
